@@ -9,6 +9,9 @@
 .env.test
 .env.production
 
+# VSCode settings
+.vscode/settings.json
+
 # Logs
 logs
 *.log
