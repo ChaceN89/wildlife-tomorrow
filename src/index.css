@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+
+@theme {
+  /* COlors 
+  primary - main theme colors of the site
+  secondary - dark color as contrast to primary
+  accent - highlight color
+  tertiary - light color as contrast to primary
+  neutral - usually white
+
+  all have an alt variation that is slightly off from the main color
+  primary-alt for examply - slightly darker than primary
+
+  */
+
+  --color-primary : #E8AC41;
+  --color-primary-alt : #D99B34; 
+
+  --color-secondary : #484A47;
+  --color-secondary-alt : #3C3D3B;
+  
+  --color-accent : #1E91D6;
+  --color-accent-alt : #60a5fa;
+
+  --color-tertiary : #A2D3C2;
+  --color-tertiary-alt : #e5e7eb;
+
+  --color-neutral : #ffffff;
+  --color-neutral-alt : #f9fafb;
+}
+
+
+
+/* 
+  No Scrolling 
+  No Scroll bar on entire site 
+*/
+html::-webkit-scrollbar, 
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+/* No scroll for individual elements with overflow */
+.scroll-element {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 11 */
+}
+.scroll-element::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
