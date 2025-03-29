@@ -36,7 +36,7 @@ import './hex-separator.css'; // Import the CSS file for hexagon styles
 export default function HexSeparator({
   rows = 4,
   cols = 80,
-  hexClass = 'bg-primary-alt/50',
+  hexClass = 'bg-primary-alt/40',
   bottom = false,
   randomColors = false
 }) {

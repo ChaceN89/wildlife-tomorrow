@@ -19,7 +19,7 @@ export default function NavBar() {
   ];
 
   return (
-    <nav className="flex items-center justify-between p-4 bg-primary text-white shadow-md">
+    <nav className="flex items-center justify-between p-4 bg-neutral text-black shadow-md border-secondary border-b-1">
       <div className="text-lg font-bold flex items-center gap-2"><img className="h-8 w-8" src="/icons/bear-paw-128.ico" />  Wildlife Tomorrow</div>
       <div className="flex gap-4">
         {navItems.map((item) => (
@@ -27,7 +27,7 @@ export default function NavBar() {
             key={item.path}
             to={item.path}
             className={({ isActive }) =>
-              `px-3 py-2 rounded hover:bg-secondary ${isActive ? "bg-secondary" : ""
+              `px-3 py-2 rounded hover:bg-tertiary ${isActive ? "bg-primary" : ""
               }`
             }
           >

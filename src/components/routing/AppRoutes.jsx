@@ -20,33 +20,42 @@ import About from "@/components/pages/About";
 import InteractiveMap from "@/components/pages/InteractiveMap";
 import Layout from "@/components/routing/Layout";
 import ScrollProgress from "@/components/routing/ScrollProgress";
+import { AnimatePresence } from "framer-motion";
 
 export default function AppRoutes() {
   const location = useLocation();
 
   useEffect(() => {
     nprogress.start();
+    nprogress.set(0.0);
 
-    // Use timeout to simulate "transition" and avoid instant flicker
-    const timeout = setTimeout(() => {
+    const timer1 = setTimeout(() => nprogress.set(0.4), 1200);
+    const timer2 = setTimeout(() => nprogress.set(0.2), 1500);
+    const timer3 = setTimeout(() => {
+      nprogress.set(1.0);
       nprogress.done();
-    }, 300); // tweak as needed
+    }, 2200);
 
-    return () => clearTimeout(timeout);
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+      clearTimeout(timer3);
+    };
   }, [location.pathname]);
+
 
   return (
     <div className="min-w-44 overflow-x-hidden bg-neutral-alt">
       <ScrollRestoration />
-      <ScrollProgress />
-
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="/interactive-map" element={<InteractiveMap />} />
-          <Route path="/about" element={<About />} />
-        </Route>
-      </Routes>
+      <AnimatePresence>
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="/interactive-map" element={<InteractiveMap />} />
+            <Route path="/about" element={<About />} />
+          </Route>
+        </Routes>
+      </AnimatePresence>
     </div>
   );
 }

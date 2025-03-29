@@ -1,37 +1,34 @@
-/**
- * @file ScrollProgress.tsx
- * @module ScrollProgress
- * @desc A Framer Motion-based progress bar that tracks the scroll progress of the main content area.
- *
- * @author Chace Nielson
- * @created Mar 14, 2025
- * @updated Mar 14, 2025
- */
+import React, { useState } from "react";
+import { motion, useMotionValueEvent, useScroll, useSpring } from "framer-motion";
 
-"use client"; // Required for Next.js (Remove if using standard React)
+export default function ScrollProgress({ targetRef }) {
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+    offset: ["start start", "end end"],
+  });
 
-import React from "react";
-import { motion, useScroll, useSpring } from "framer-motion";
-
-export default function ScrollProgress() {
-  // Track the scroll progress of the `main` content section
-
-  const { scrollYProgress } = useScroll();
-
-  // Smooth progress animation
   const springScrollYProgress = useSpring(scrollYProgress, {
-    stiffness: 300,
-    damping: 30,
-    mass: 1,
+    stiffness: 180,
+    damping: 15,
+    mass: 0.4,
+  });
+
+  const [progress, setProgress] = useState(0);
+
+  // Listen to changes on the spring value
+  useMotionValueEvent(springScrollYProgress, "change", (latest) => {
+    setProgress(latest);
   });
 
   return (
     <>
-      {/* Custom Scroll Progress Bar */}
       <motion.div
-        className="fixed top-0 left-0 w-full h-1 bg-primary origin-left z-50"
+        className="fixed left-0 bottom-0 w-full h-1.5 bg-secondary origin-left z-[100] "
         style={{ scaleX: springScrollYProgress }}
       />
+      <div className="fixed top-4 right-4 bg-black text-white p-2 z-[100]">
+        Scroll: {Math.round(progress * 100)}%
+      </div>
     </>
   );
 }

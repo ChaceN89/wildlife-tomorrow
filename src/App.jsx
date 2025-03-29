@@ -23,17 +23,17 @@ import ToasterLayout from "@/components/routing/ToasterLayout";
 const AppRoutes = memo(lazy(() => import("@/components/routing/AppRoutes"))); // Memoized Home component
 
 export default function App() {
-  return(
+  return (
     <ErrorBoundary>
-    <Suspense fallback={<SplashScreen />}>
-      <Router>
-        <ToasterLayout/>
-        <DisplayTesting />
-        <AnalyticsProvider>
-          <AppRoutes />
-        </AnalyticsProvider>
-      </Router>
-    </Suspense>
-  </ErrorBoundary>
+      <Suspense fallback={<SplashScreen />}>
+        <Router>
+          <ToasterLayout />
+          <DisplayTesting />
+          <AnalyticsProvider>
+            <AppRoutes />
+          </AnalyticsProvider>
+        </Router>
+      </Suspense>
+    </ErrorBoundary>
   )
 }
