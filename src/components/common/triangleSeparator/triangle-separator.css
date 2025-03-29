@@ -1,0 +1,50 @@
+/* ==========================================================================
+ * @file triangle-separator.css
+ * @module UI/TriangleSeparator
+ * @desc Styles for the TriangleSeparator component. Provides a flexible,
+ *       interlocking triangle grid used as section separators or visual accents.
+ *       Includes flipping pattern and responsive alignment.
+ *
+ * @author Chace Nielson
+ * @created Mar 29, 2025
+ * @updated Mar 29, 2025
+ * ==========================================================================
+ */
+
+.triangle-grid {
+  position: absolute;
+  top: 0%;
+  left: 50%;
+  transform: translate(-50%, -0%);
+  pointer-events: none;
+  z-index: 0;
+  width: max-content;
+}
+
+.bottom-triangle-grid {
+  margin-bottom: -1px;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.triangle-row {
+  display: flex;
+  margin-top: 1px;
+}
+
+.triangle-row-offset {
+  margin-left: -14px;
+}
+
+.triangle {
+  width: 41px;
+  height: 36px;
+  clip-path: polygon(50% 0%,
+      100% 100%,
+      0% 100%);
+  margin-left: -19px;
+}
+
+.flipped {
+  transform: rotate(180deg);
+}
