@@ -26,9 +26,9 @@ export default function ScrollProgress({ targetRef }) {
         className="fixed left-0 bottom-0 w-full h-1.5 bg-secondary origin-left z-[100] "
         style={{ scaleX: springScrollYProgress }}
       />
-      <div className="fixed top-4 right-4 bg-black text-white p-2 z-[100]">
+      {/* <div className="fixed top-4 right-4 bg-black text-white p-2 z-[100]">
         Scroll: {Math.round(progress * 100)}%
-      </div>
+      </div> */}
     </>
   );
 }

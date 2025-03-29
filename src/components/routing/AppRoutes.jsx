@@ -12,6 +12,7 @@ import React, { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import nprogress from "nprogress";
 import "nprogress/nprogress.css";
+import "@/styles/nprogress.css"; // Custom styles for nprogress
 
 import ScrollRestoration from "@/components/routing/ScrollRestoration";
 
@@ -19,13 +20,13 @@ import Home from "@/components/pages/Home";
 import About from "@/components/pages/About";
 import InteractiveMap from "@/components/pages/InteractiveMap";
 import Layout from "@/components/routing/Layout";
-import ScrollProgress from "@/components/routing/ScrollProgress";
 import { AnimatePresence } from "framer-motion";
 
 export default function AppRoutes() {
   const location = useLocation();
 
   useEffect(() => {
+    nprogress.configure({ showSpinner: true });
     nprogress.start();
     nprogress.set(0.0);
 

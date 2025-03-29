@@ -1,0 +1,17 @@
+#nprogress .bar {
+  /* background: #FCE389;
+  height: 70px;
+  opacity: 0.5; */
+}
+
+#nprogress .peg {
+  display: none;
+}
+
+#nprogress .spinner {
+  display: none;
+}
+
+#nprogress {
+  transition: opacity 0.4s ease;
+}
