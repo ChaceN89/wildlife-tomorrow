@@ -1,34 +1,52 @@
-import React from 'react'
-import ColorBoxes from '@/components/development/ColorBoxes'
-import Triangles from '@/components/common/triangleSeparator/TriangleSeparator'
-import HexSeparator from '@/components/common/hexSeparator/HexSeparator'
+/**
+ * @file AppRoutes.jsx
+ * @module routing/AppRoutes
+ * @desc Defines top-level application routes and global route transition loading
+ *
+ * @author Chace Nielson
+ * @created Mar 28, 2025
+ * @updated Mar 28, 2025
+ */
+
+import React, { useEffect } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
+import nprogress from "nprogress";
+import "nprogress/nprogress.css";
+
+import ScrollRestoration from "@/components/routing/ScrollRestoration";
+
+import Home from "@/components/pages/Home";
+import About from "@/components/pages/About";
+import InteractiveMap from "@/components/pages/InteractiveMap";
+import Layout from "@/components/routing/Layout";
+import ScrollProgress from "@/components/routing/ScrollProgress";
 
 export default function AppRoutes() {
+  const location = useLocation();
+
+  useEffect(() => {
+    nprogress.start();
+
+    // Use timeout to simulate "transition" and avoid instant flicker
+    const timeout = setTimeout(() => {
+      nprogress.done();
+    }, 300); // tweak as needed
+
+    return () => clearTimeout(timeout);
+  }, [location.pathname]);
+
   return (
-    <div className='flex flex-col items-center justify-center min-h-screen bg-neutral-alt p-20 overflow-x-hidden '>
+    <div className="min-w-44 overflow-x-hidden bg-neutral-alt">
+      <ScrollRestoration />
+      <ScrollProgress />
 
-
-
-      <div className='h-96 w-full border-4 bg-pink-400 flex items-center justify-center relative'>
-        <div className='relative z-10'>
-          Top section
-        </div>
-      </div>
-      <Triangles bottom />
-      <HexSeparator />
-
-
-      {/* show extend downwards to cover child below */}
-
-      <div className='h-96 w-full border-4 flex items-center justify-center'>
-        bottom section
-      </div>
-
-
-
-
-
-      {/* <ColorBoxes /> */}
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="/interactive-map" element={<InteractiveMap />} />
+          <Route path="/about" element={<About />} />
+        </Route>
+      </Routes>
     </div>
-  )
+  );
 }
