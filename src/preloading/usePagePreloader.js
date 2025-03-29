@@ -55,7 +55,7 @@ export const usePagePreloader = () => {
    *
    * @param {Object} item - The navigation item data (path, preLoadFunc, showToast, etc.).
    */
-  const preloadAndNavigate = async (item) => {
+  const preloadAndNavigate = async (item, useNavigate = true) => {
     const { path, preLoadFunc, showToast, toastMessage, toastDescription } = item;
 
     // If no preloading required → navigate immediately
@@ -103,9 +103,14 @@ export const usePagePreloader = () => {
 
       // Only navigate if preload not cancelled
       if (!isCancelled) {
+        // Complete process and navigate to page using path
         nprogress.done();
-        navigate(path);
+
+        // navigate 
+        if (useNavigate) navigate(path);
+
       } else {
+        // fail gracefully if cancelled
         console.log(`Preload cancelled for ${path}`);
         nprogress.done();
       }

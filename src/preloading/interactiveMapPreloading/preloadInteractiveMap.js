@@ -30,6 +30,8 @@ import "@/styles/nprogress.css"; // Custom NProgress styles
 // the Context API to set the preloaded data and its infoamtion
 import { getInteractiveMapContext } from "@/preloading/interactiveMapPreloading/InteractiveMapContext";
 
+
+// Just for this file, to keep the code clean and load a file
 const preloadImage = (src) => {
   return new Promise((resolve, reject) => {
     const img = new Image();
@@ -39,13 +41,15 @@ const preloadImage = (src) => {
   });
 };
 
+// this shold work with the context to set data and avoid setting data that already exists 
 
 
-export const preloadInteractiveMap = async (skipProgress = false) => {
-  if (!skipProgress) nprogress.start();
+
+export const preloadInteractiveMap = async () => {
+  nprogress.start();
 
   try {
-    if (!skipProgress) nprogress.set(0.2);
+    nprogress.set(0.2);
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     const imagePath = "/range4.png";
@@ -61,16 +65,14 @@ export const preloadInteractiveMap = async (skipProgress = false) => {
       image: loadedImage,
     });
 
-    if (!skipProgress) {
-      await new Promise((resolve) => setTimeout(resolve, 600));
-      nprogress.set(1);
-    }
+
+    nprogress.set(1);
 
   } catch (error) {
     console.error("❌ Failed to preload Interactive Map data:", error);
     throw error;
   } finally {
-    if (!skipProgress) nprogress.done();
+    nprogress.done();
   }
 
   return true;

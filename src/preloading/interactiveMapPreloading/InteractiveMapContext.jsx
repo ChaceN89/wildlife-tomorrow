@@ -20,8 +20,7 @@
  * @updated Mar 29, 2025
  */
 
-import { preloadInteractiveMap } from "@/preloading/interactiveMapPreloading/preloadInteractiveMap";
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useState } from "react";
 
 // Internal variable to hold the current context state for external access
 let _interactiveMapContext = null;
@@ -29,17 +28,6 @@ let _interactiveMapContext = null;
 // Create the React Context object
 export const InteractiveMapContext = createContext(null);
 
-/**
- * Hook for consuming the Interactive Map data inside components.
- * Must be used inside a <InteractiveMapProvider> tree.
- */
-export const useInteractiveMapData = () => {
-  const context = useContext(InteractiveMapContext);
-  if (!context) {
-    throw new Error("useInteractiveMapData must be used within <InteractiveMapProvider />");
-  }
-  return context;
-};
 
 /**
  * Global getter for accessing the context outside React components (e.g., in preload functions).
@@ -62,9 +50,12 @@ export const InteractiveMapProvider = ({ children }) => {
   const [pointsOfInterest, setPointsOfInterest] = useState([]);
   const [mapImage, setMapImage] = useState(null); // Image asset to simulate loading
 
-  const [isLoaded, setIsLoaded] = useState(false);
+  // State to track if data has been loaded - for directly loading the map page
+  const [dataIsloaded, setDataIsLoaded] = useState(false);
 
   /**
+   * !!!! this will be replaced by actual mehod for loading the data when we start using real data
+   * 
    * Loads new data into the context state.
    * Typically called inside preloadInteractiveMap.js before navigation.
    * 
@@ -77,18 +68,9 @@ export const InteractiveMapProvider = ({ children }) => {
     setMapLayers(layers);
     setPointsOfInterest(pois);
     if (image) setMapImage(image);
-    setIsLoaded(true); // ✅ Mark data as loaded
+    setDataIsLoaded(true); // ✅ Mark data as loaded
   };
 
-  useEffect(() => {
-    // If user directly navigates to /interactive-map
-    if (!isLoaded) {
-      console.log("⚠️ No preload detected. Loading data on page mount...");
-      preloadInteractiveMap().catch((err) => {
-        console.error("Failed to auto-load map data", err);
-      });
-    }
-  }, [isLoaded]);
 
   // Assign the context to a global ref for external access
   _interactiveMapContext = {
@@ -96,7 +78,7 @@ export const InteractiveMapProvider = ({ children }) => {
     pointsOfInterest,
     mapImage,
     loadMapData,
-    isLoaded,
+    dataIsloaded,
   };
 
   return (

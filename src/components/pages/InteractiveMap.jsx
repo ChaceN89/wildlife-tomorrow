@@ -1,33 +1,57 @@
 /**
  * @file InteractiveMap.jsx
  * @module pages/InteractiveMap
- * @desc Displays the interactive map page with preloaded data fetched before navigation.
- *       Uses preloading context to provide map layers, points, and metadata.
- *
+ * @desc Displays the Interactive Map page.
+ *       Handles loading and displaying preloaded map data including layers, POIs, and image assets.
+ *       Ensures data is loaded even if user navigates directly to this page (via page reload or direct link).
+ * 
+ * @features
+ * - Retrieves map data from InteractiveMapContext.
+ * - Triggers preloading logic if data is not already loaded.
+ * - Displays a splash screen while loading.
+ * - Shows map layers, POIs, and preview image after data is ready.
+ * 
+ * @usage
+ * This component is rendered at `/interactive-map` route.
+ * It automatically calls preload logic on mount if preloading has not been done.
+ * 
+ * @author Chace Nielson
  * @created Mar 28, 2025
- * @updated Mar 29, 2025
+ * @updated Mar 30, 2025
  */
 
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { InteractiveMapContext } from "@/preloading/interactiveMapPreloading/InteractiveMapContext";
+import SplashScreen from "@/components/routing/SplashScreen";
+import { usePagePreloader } from "@/preloading/usePagePreloader";
+import { navItems } from "@/data/navItems";
 
 export default function InteractiveMap() {
+  const hasPreloadedRef = useRef(false);
 
-  // cehck if the context has a is loaded and i can dispay the data other wise load it
+  // Get preloaded data from context
+  const { mapLayers, pointsOfInterest, mapImage, dataIsloaded } = useContext(InteractiveMapContext);
+  const { preloadAndNavigate } = usePagePreloader();
 
-  // Consume preloaded data from context
-  const { mapLayers, pointsOfInterest, mapImage, isLoaded } = useContext(InteractiveMapContext);
+  // If data is not loaded (e.g. direct access), trigger preload once
+  useEffect(() => {
+    if (hasPreloadedRef.current) return;
+    hasPreloadedRef.current = true;
 
+    if (!dataIsloaded) {
+      const item = navItems.find((item) => item.path === "/interactive-map");
+      preloadAndNavigate(item, false); // Pass false to avoid triggering navigation
+    }
+  }, []);
+
+  // Show splash screen while loading data
+  if (!dataIsloaded) {
+    return <SplashScreen />
+  }
+
+  // Render loaded map data
   return (
-    // {isLoading based on context from reloading the page}
-
     <div className="p-10 bg-tertiary-alt text-black min-h-screen">
-      {!isLoaded && (
-        <div className="">
-          <div className="loader">Loading</div>
-        </div>
-      )}
-      {/* Page content */}
       <h1 className="text-3xl font-bold mb-4">Interactive Map</h1>
       <p className="mb-6">This page will display an interactive map after preloading the necessary data.</p>
 
@@ -45,7 +69,6 @@ export default function InteractiveMap() {
       {mapImage && (
         <img src={mapImage} alt="Map Preview" className="w-full max-h-96 object-cover my-4" />
       )}
-
 
       <section>
         <h2 className="text-xl font-semibold mb-2">Points of Interest:</h2>
