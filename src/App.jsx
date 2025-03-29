@@ -11,6 +11,7 @@
 import { Suspense } from "react";
 import { BrowserRouter as Router } from 'react-router-dom';
 import AnalyticsProvider from "@/analytics/AnalyticsProvider";
+import { LoadingProvider } from '@/preloading/LoadingContext'
 
 // Components
 import { lazy, memo } from "react";
@@ -30,7 +31,9 @@ export default function App() {
           <ToasterLayout />
           <DisplayTesting />
           <AnalyticsProvider>
-            <AppRoutes />
+            <LoadingProvider>
+              <AppRoutes />
+            </LoadingProvider>
           </AnalyticsProvider>
         </Router>
       </Suspense>

@@ -18,18 +18,19 @@ import { Toaster } from "react-hot-toast"
 export default function ToasterLayout() {
 
   const isSm = window.innerWidth >= 640;
-  
+
   return (
     <Toaster
-      position={isSm ? "bottom-right" : "bottom-center"}
+      position="top-center"
       reverseOrder={false}
       toastOptions={{
         style: {
-          backgroundColor: "var(--color-primary-alt-transparent)", 
-          border: "2px solid var(--color-primary)",
-          borderRadius: "12px", 
-          padding: "12px 4px", 
-          boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.5)", 
+          backgroundColor: "var(--color-secondary)",
+          border: "2px solid var(--color-tertiary-alt)",
+          borderRadius: "12px",
+          color: "var(--color-white)",
+          padding: "12px 8px",
+          boxShadow: "4px 10px 15px 3px rgba(0, 0, 0, 0.9)",
           backdropFilter: "blur(20px)", // frosted glass effect
         },
       }}
