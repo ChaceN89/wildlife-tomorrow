@@ -1,4 +1,4 @@
-import { preloadInteractiveMap } from "@/preloading/pagePreloaders/preloadInteractiveMap";
+import { preloadInteractiveMap } from "@/preloading/interactiveMapPreloading/preloadInteractiveMap";
 
 export const navItems = [
   {

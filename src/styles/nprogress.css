@@ -1,8 +1,8 @@
 /* https://www.npmjs.com/package/nprogress */
 #nprogress .bar {
-  /* background: #FCE389;
+  background: #FCE389;
   height: 70px;
-  opacity: 0.5; */
+  opacity: 0.5;
 }
 
 #nprogress .peg {
